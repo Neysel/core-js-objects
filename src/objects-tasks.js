@@ -187,7 +187,13 @@ function sellTickets(queue) {
       }
     }
   }
-  const result = checkArrayResult.length === 0;
+  let result = '';
+  if (checkArrayResult.length === 0) {
+    result = true;
+  } else {
+    result = false;
+  }
+  //  = checkArrayResult.length === 0;
   return result;
 }
 
