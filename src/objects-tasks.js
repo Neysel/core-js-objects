@@ -436,45 +436,167 @@ function group(array, keySelector, valueSelector) {
 
 // }
 const cssSelectorBuilder = {
-  item: '',
+  item: {
+    element: '',
+    id: '',
+    class: '',
+    attr: '',
+    pseudoClass: '',
+    pseudoElement: '',
+  },
+  str: '',
   element(value) {
     // console.log(`${value}`);
+    this.checkQueue(1);
+    // console.log(this.item);
+    if (this.item.element !== '') {
+      throw new Error(
+        'Element, id and pseudo-element should not occur more then one time inside the selector'
+      );
+    }
     const result = `${value}`;
-    this.item += result;
-    return this;
+    const newObj = Object.create(cssSelectorBuilder);
+    // console.log(newObj.item.element);
+    newObj.item = {
+      element: result,
+      id: '',
+      class: '',
+      attr: '',
+      pseudoClass: '',
+      pseudoElement: '',
+    };
+    newObj.queue = 1;
+    newObj.str = this.str + value;
+    return newObj;
   },
-
   id(value) {
-    console.log(`#${value}`);
-    return `#${value}`;
-  },
+    this.checkQueue(2);
+    if (this.item.id !== '') {
+      throw new Error(
+        'Element, id and pseudo-element should not occur more then one time inside the selector'
+      );
+    }
+    const result = `#${value}`;
+    // const newObj = this.createObj();
+    // console.log(newObj);
+    // this.str = this.createStr();
+    // return this.createObj();
+    const newObj = Object.create(cssSelectorBuilder);
 
+    newObj.item = {
+      element: '',
+      id: result,
+      class: '',
+      attr: '',
+      pseudoClass: '',
+      pseudoElement: '',
+    };
+    newObj.queue = 2;
+    newObj.str = `${this.str}#${value}`;
+    return newObj;
+  },
   class(value) {
-    console.log(`.${value}`);
-    return `.${value}`;
+    this.checkQueue(3);
+    const result = `.${value}`;
+    // this.item.class += result;
+    const newObj = Object.create(cssSelectorBuilder);
+    newObj.item = {
+      element: '',
+      id: '',
+      class: result,
+      attr: '',
+      pseudoClass: '',
+      pseudoElement: '',
+    };
+    newObj.queue = 3;
+    newObj.str = `${this.str}.${value}`;
+    return newObj;
   },
 
   attr(value) {
-    console.log(`[${value}]`);
-    return `[${value}]`;
+    this.checkQueue(4);
+    const result = `[${value}]`;
+    // this.item.attr = result;
+    const newObj = Object.create(cssSelectorBuilder);
+    newObj.item = {
+      element: '',
+      id: '',
+      class: '',
+      attr: result,
+      pseudoClass: '',
+      pseudoElement: '',
+    };
+    newObj.queue = 4;
+    newObj.str = `${this.str}[${value}]`;
+    return newObj;
   },
 
   pseudoClass(value) {
-    console.log(`:${value}`);
-    return `:${value}`;
+    this.checkQueue(5);
+    const result = `:${value}`;
+    const newObj = Object.create(cssSelectorBuilder);
+    newObj.str = `${this.str}:${value}`;
+    newObj.queue = 5;
+    newObj.item = {
+      element: '',
+      id: '',
+      class: '',
+      attr: '',
+      pseudoClass: result,
+      pseudoElement: '',
+    };
+    return newObj;
   },
 
   pseudoElement(value) {
-    console.log(`::${value}`);
-    return `::${value}`;
+    this.checkQueue(6);
+    if (this.item.pseudoElement !== '') {
+      throw new Error(
+        'Element, id and pseudo-element should not occur more then one time inside the selector'
+      );
+    }
+    const result = `::${value}`;
+    const newObj = Object.create(cssSelectorBuilder);
+
+    newObj.item = {
+      element: '',
+      id: '',
+      class: '',
+      attr: '',
+      pseudoClass: '',
+      pseudoElement: result,
+    };
+    newObj.queue = 6;
+    newObj.str = `${this.str}::${value}`;
+    return newObj;
+  },
+  // checkValidOrder() {
+  //   const correct = `${this.item.element}${this.item.id}${this.item.class}${this.item.attr}${this.item.pseudoClass}${this.item.pseudoElement}`;
+  //   console.log();
+  //   if (this.str !== correct) {
+  //     throw new Error(
+  //       'Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element'
+  //     );
+  //   }
+  // },
+  checkQueue(v) {
+    if (this.queue > v) {
+      throw new Error(
+        'Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element'
+      );
+    }
   },
   stringify() {
-    return this;
+    // this.checkValidOrder();
+    return this.str;
   },
-
   combine(selector1, combinator, selector2) {
-    console.log(`${selector1}${combinator}${selector2}`);
-    return `${selector1}${combinator}${selector2}`;
+    // console.log(selector1.str);
+    // console.log(selector2.str);
+    // this.str = `${selector1.str}${combinator}${selector2.str}`;
+    const newObj = Object.create(cssSelectorBuilder);
+    newObj.str = `${selector1.str} ${combinator} ${selector2.str}`;
+    return newObj;
   },
 };
 
