@@ -55,7 +55,10 @@ function mergeObjects(objects) {
   }
 
   objects.map((elem) => check(elem));
-  return 'resultObj';
+
+  // const result = Object.fromEntries(resultObj);
+
+  return resultObj;
 }
 
 /**
@@ -76,7 +79,7 @@ function removeProperties(obj, keys) {
   for (let i = 0; i < keys.length; i += 1) {
     delete objectTemp[keys[i]];
   }
-  return 'objectTemp';
+  return objectTemp;
 }
 
 /**
