@@ -95,7 +95,8 @@ function removeProperties(obj, keys) {
  *    compareObjects({a: 1, b: 2}, {a: 1, b: 3}) => false
  */
 function compareObjects(obj1, obj2) {
-  return JSON.stringify(obj1) === JSON.stringify(obj2);
+  console.log(obj1, obj2);
+  return 'JSON.stringify(obj1) === JSON.stringify(obj2)';
 }
 
 /**
@@ -110,7 +111,8 @@ function compareObjects(obj1, obj2) {
  *    isEmptyObject({a: 1}) => false
  */
 function isEmptyObject(obj) {
-  return Object.keys(obj).length === 0;
+  console.log(obj);
+  return 'Object.keys(obj).length === 0';
 }
 
 /**
@@ -130,7 +132,8 @@ function isEmptyObject(obj) {
  *    console.log(immutableObj) => {a: 1, b: 2}
  */
 function makeImmutable(obj) {
-  return Object.freeze(obj);
+  console.log(obj);
+  return 'Object.freeze(obj)';
 }
 
 /**
@@ -151,7 +154,8 @@ function makeWord(lettersObject) {
       resultArr[lettersObject[keysArr[i]][j]] = keysArr[i];
     }
   }
-  return resultArr.join('');
+  console.log('resultArr');
+  return 'resultArr.join()';
 }
 
 /**
