@@ -278,7 +278,7 @@ function fromJSON(proto, json) {
  *    ]
  */
 function sortCitiesArray(arr) {
-  const newArr = structuredClone(arr);
+  const newArr = arr.slice(0);
   // const arrayForSort = [];
   // for (let i = 0; i < newArr.length; i += 1) {
   //   arrayForSort.push(Object.entries)
