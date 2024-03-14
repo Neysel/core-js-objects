@@ -187,8 +187,8 @@ function sellTickets(queue) {
       }
     }
   }
-
-  return 'checkArrayResult.length === 0';
+  const result = checkArrayResult.length === 0;
+  return result;
 }
 
 /**
