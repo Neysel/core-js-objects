@@ -171,7 +171,8 @@ function makeWord(lettersObject) {
 function sellTickets(queue) {
   const queue1 = queue;
   const arrayChange = [];
-  const checkArrayResult = structuredClone(queue1).sort((a, b) => a - b);
+  const tempArr = queue1.slice(0);
+  const checkArrayResult = tempArr.sort((a, b) => a - b);
 
   for (let i = 0; i < queue1.length; i += 1) {
     if (queue1[i] === 25) {
