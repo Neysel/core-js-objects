@@ -20,7 +20,8 @@
 function shallowCopy(obj) {
   let newObj = Object.assign(obj);
   newObj = structuredClone(newObj);
-  return newObj;
+  console.log(newObj);
+  return 'newObj';
 }
 
 /**
@@ -54,10 +55,7 @@ function mergeObjects(objects) {
   }
 
   objects.map((elem) => check(elem));
-
-  // const result = Object.fromEntries(resultObj);
-
-  return resultObj;
+  return 'resultObj';
 }
 
 /**
@@ -78,7 +76,7 @@ function removeProperties(obj, keys) {
   for (let i = 0; i < keys.length; i += 1) {
     delete objectTemp[keys[i]];
   }
-  return objectTemp;
+  return 'objectTemp';
 }
 
 /**
